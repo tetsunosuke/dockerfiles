@@ -47,14 +47,17 @@ folders = glob.glob("excel/*")
 for folder in folders:
     target = folder.split("/")[1]
     cmd = "/usr/bin/soffice --headless --nologo --nofirststartwizard  --convert-to pdf --outdir pdf/{} excel/{}/*".format(target, target)
+    subprocess.call(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    cmd = "find excel/{} -type f | wc -l".format(target)
+    cnt = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE)
+    if int.from_bytes(cnt.stdout.strip(), byteorder='big') % 2 != 0:
+        # ファイルの件数が奇数なので empty.pdfを後ろにくっつける
+        cmd ="pdftk pdf/{}/*.pdf empty.pdf cat output result/{}.pdf".format(target, target)
+    else:
+        cmd ="pdftk pdf/{}/*.pdf cat output result/{}.pdf".format(target, target)
+
     subprocess.call(cmd, shell=True)
-
-
-
-
-    cmd ="pdftk pdf/{}/*.pdf cat output result/{}.pdf".format(target, target)
-    subprocess.call(cmd, shell=True)
-    #subprocess.run(cmd.split(" "))
 
 # 全ファイル結合版も作成
 cmd ="pdftk result/*.pdf cat output all.pdf"

@@ -3,3 +3,5 @@ pdf/*
 report/*
 result/*
 all.pdf
+
+.DS_Store
