@@ -4,10 +4,11 @@ import os
 import glob
 import subprocess
 import shutil
+import re
 
 
 """
-reports フォルダには　YYYY-MM-DD 形式のフォルダがあり、
+report フォルダには　YYYY-MM-DD 形式のフォルダがあり、
 その中には {従業員番号}_{氏名}_{YYYY-MM-DD}_{コース名}.xlsx
 でレポートファイルが格納されている
 
@@ -17,8 +18,10 @@ reports フォルダには　YYYY-MM-DD 形式のフォルダがあり、
 
 folders = glob.glob("report/*")
 for folder in folders:
-    files = glob.glob(folder + "/*.xlsx")
+    files = glob.glob(folder + "/*")
     for file in files:
+        if not re.search('\.(xlsx|docx)$', file):
+            continue
         (f1, f2, f) = file.split("/")
         #print(file)
         tmp = f.split("_")
