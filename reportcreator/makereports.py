@@ -37,7 +37,6 @@ for folder in folders:
         # そのフォルダにファイルをコピー
         shutil.copyfile(file, new_path + "/" + f)
 
-
 """
 resource フォルダ以下にある 従業員コード_氏名_YYYYMM のフォルダの
 配下にあるexlxファイルをすべて一度pdfファイルに変換し、
@@ -52,14 +51,7 @@ for folder in folders:
     cmd = "/usr/bin/soffice --headless --nologo --nofirststartwizard  --convert-to pdf --outdir pdf/{} resource/{}/*".format(target, target)
     subprocess.call(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    cmd = "find resource/{} -type f | wc -l".format(target)
-    cnt = subprocess.run(cmd, shell=True,stdout=subprocess.PIPE)
-    if int.from_bytes(cnt.stdout.strip(), byteorder='big') % 2 != 0:
-        # ファイルの件数が奇数なので empty.pdfを後ろにくっつける
-        cmd ="pdftk pdf/{}/*.pdf empty.pdf cat output result/{}.pdf".format(target, target)
-    else:
-        cmd ="pdftk pdf/{}/*.pdf cat output result/{}.pdf".format(target, target)
-
+    cmd ="pdftk pdf/{}/*.pdf cat output result/{}.pdf".format(target, target)
     subprocess.call(cmd, shell=True)
 
 
@@ -79,6 +71,6 @@ subprocess.call(cmd, shell=True)
  
 
 # 全ファイル結合版も作成
-cmd ="pdftk result/*.pdf cat output all.pdf"
+cmd ="pdftk  pll.pdf pc.pdf cat output all.pdf"
 subprocess.call(cmd, shell=True)
 
