@@ -34,12 +34,12 @@ for folder in folders:
         if not os.path.exists(new_path):
             os.mkdir(new_path)
 
-        # そのフォルダにファイルをコピー
+        # そのフォルダにファイルをコピー（上書き）
         shutil.copyfile(file, new_path + "/" + f)
 
 """
 resource フォルダ以下にある 従業員コード_氏名_YYYYMM のフォルダの
-配下にあるexlxファイルをすべて一度pdfファイルに変換し、
+配下にあるファイルをすべて一度pdfファイルに変換し、
 それらのPDFファイルをその人ごとに統合する
 """
 

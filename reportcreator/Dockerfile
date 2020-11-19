@@ -7,8 +7,8 @@ RUN mkdir /work
 WORKDIR /work
 VOLUME ["/work"]
 
-RUN apt-get update \
-    apt-get install -y --no-install-recommends unzip build-essentia \
+RUN apt-get update  && \
+    apt-get install -y --no-install-recommends unzip build-essential \
     libreoffice libreoffice-l10n-ja fonts-ipafont fonts-ipaexfont \
     pdftk-java && \
     apt-get clean
